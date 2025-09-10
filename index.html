@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Python Developer Cheat Sheet (2025) — White, Single Column</title>
+  <meta name="description" content="Compact Python developer cheat sheet — white theme, single‑column layout with copy buttons and print to PDF." />
+  <style>
+    :root{
+      --bg:#ffffff; --text:#0f172a; --muted:#475569; --panel:#f8fafc; --border:#e5e7eb; --accent:#2563eb;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    html,body{background:var(--bg); color:var(--text); margin:0;}
+    body{font-family: var(--sans); line-height:1.55;}
+    header{position:sticky; top:0; z-index:10; background:#ffffffcc; backdrop-filter:saturate(1.2) blur(6px); border-bottom:1px solid var(--border);} 
+    .container{max-width:960px; margin:0 auto; padding:18px 16px;}
+    h1{margin:0; font-weight:800; letter-spacing:-.02em;}
+    h2{margin:.25rem 0 .75rem; font-size:1.05rem; letter-spacing:.02em}
+    .sub{color:var(--muted); font-size:.9rem}
+    .stack{display:grid; grid-template-columns:1fr; gap:16px;}
+    .card{border:1px solid var(--border); border-radius:14px; background:var(--panel);} 
+    .card .inner{padding:14px 14px 12px;}
+    pre{margin:0; padding:12px; background:#fff; border:1px solid var(--border); border-radius:10px; overflow:auto; font-family:var(--mono); font-size:.9rem}
+    code{font-family:var(--mono)}
+    .copy{position:absolute; right:12px; top:10px; border:1px solid var(--border); background:#fff; color:var(--text); border-radius:8px; padding:4px 8px; font-size:.75rem; cursor:pointer}
+    .tool{display:flex; gap:8px; align-items:center}
+    input[type="search"]{flex:1; border:1px solid var(--border); border-radius:10px; padding:8px 10px; font-size:.9rem}
+    .btn{border:1px solid var(--border); background:#fff; border-radius:10px; padding:8px 10px; font-size:.9rem; cursor:pointer}
+    footer{color:var(--muted); font-size:.85rem; text-align:center; padding:24px 0}
+    .rel{position:relative}
+    ul.tips{margin:0; padding-left:18px}
+    ul.tips li{margin:.25rem 0}
+    @media print{ header{position:static} .btn,.tool{display:none} .card{break-inside:avoid} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container" style="display:flex; gap:12px; align-items:center">
+      <div>
+        <h1>🐍 Python Developer Cheat Sheet <span style="color:var(--accent)">(2025)</span></h1>
+        <div class="sub">White theme • single‑column • copyable snippets • print‑friendly</div>
+      </div>
+      <div class="tool" style="margin-left:auto">
+        <input id="q" type="search" placeholder="Filter sections… (e.g., FastAPI, pytest, SQL)" />
+        <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="stack" class="stack">
+
+      <!-- 1 Basics -->
+      <section class="card" data-title="basics virtualenv syntax unpacking f-strings">
+        <div class="inner">
+          <h2>1) Python Basics</h2>
+          <div class="rel">
+            <button class="copy" title="Copy">⧉</button>
+<pre><code>#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+python -m venv .venv
+source .venv/bin/activate    # Windows: .venv\Scripts\activate
+python -m pip install -U pip
+
+# f-strings / walrus / ternary / unpacking
+name = "Kara"; n = 7
+print(f"Hello {name}! n^2={n*n}")
+if (line := input().strip()): print(line)
+msg = "even" if n % 2 == 0 else "odd"
+x, *rest = [1,2,3,4]
+
+a = {'x': 1, 'y': 2}; b = {'y': 20, 'z': 3}
+merged = {**a, **b}  # {'x':1,'y':20,'z':3}
+</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 Comprehensions -->
+      <section class="card" data-title="comprehensions generators">
+        <div class="inner">
+          <h2>2) Comprehensions & Generators</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code>squares = [i*i for i in range(10) if i%2==0]
+lookup = {user.id: user for user in users}
+unique = {x.strip() for x in lines}
+stream = (f(x) for x in data)  # lazy
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 3 Functions/Decorators/Context -->
+      <section class="card" data-title="functions decorators context managers retry">
+        <div class="inner">
+          <h2>3) Functions, Decorators, Context Managers</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code>def func(a, b=0, *args, c=1, **kw):
+    """Describe params & returns"""
+    return (a+b)*c
+
+from functools import wraps
+
+def retry(times=3):
+    def deco(fn):
+        @wraps(fn)
+        def inner(*a, **k):
+            for i in range(1, times+1):
+                try: return fn(*a, **k)
+                except Exception:
+                    if i==times: raise
+        return inner
+    return deco
+
+from contextlib import contextmanager
+@contextmanager
+def db_session(Session):
+    s = Session();
+    try:
+        yield s; s.commit()
+    except:
+        s.rollback(); raise
+    finally:
+        s.close()
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 4 OOP & Typing -->
+      <section class="card" data-title="oop dataclasses typing optional union callable">
+        <div class="inner">
+          <h2>4) OOP & Data Classes, Typing</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code>from dataclasses import dataclass, field
+@dataclass(slots=True)
+class User:
+    id: int
+    name: str
+    tags: list[str] = field(default_factory=list)
+
+from typing import Optional, Union, Callable
+MaybeStr = Optional[str]
+Number = Union[int, float]
+Checker = Callable[[int, str], bool]
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 5 Logging/Files/Regex -->
+      <section class="card" data-title="logging files paths time regex">
+        <div class="inner">
+          <h2>5) Errors & Logging • Files & Time • Regex</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code>import logging
+logging.basicConfig(
+  level=logging.INFO,
+  format="%(asctime)s [%(levelname)s] %(name)s:%(lineno)d %(message)s"
+)
+log = logging.getLogger("app")
+
+from pathlib import Path
+p = Path("data/input.txt")
+text = p.read_text(encoding="utf-8")
+(Path("out").mkdir(parents=True, exist_ok=True))
+(Path("out")/"x.txt").write_text("hi")
+
+from datetime import datetime, timezone
+now_utc = datetime.now(timezone.utc)
+
+import re
+m = re.search(r"\b(\w+)@(\w+\.[a-z]+)\b", s)
+if m: user, domain = m.groups()
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 6 Subprocess & Perf -->
+      <section class="card" data-title="subprocess performance itertools collections profile">
+        <div class="inner">
+          <h2>6) Subprocess & Performance Tips</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code>import subprocess as sp
+sp.run(["ls", "-la"], check=True)
+
+# Tips
+# - Use "".join() over + for strings
+# - Prefer set/dict lookups (O(1))
+# - Use itertools, collections (Counter, deque)
+# - Profile: python -m cProfile -o prof.out script.py
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 7 Collections methods -->
+      <section class="card" data-title="collections list dict set counter deque defaultdict">
+        <div class="inner">
+          <h2>7) Collections & Methods</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code># list
+lst = [1,2,3]; lst.append(4); lst.extend([5,6]); lst.insert(0, 0)
+lst.remove(3); x = lst.pop(); lst.sort(key=lambda x: x, reverse=True)
+
+# dict
+d = {"a":1}; d.get("x", 0); d.setdefault("k", []).append(1)
+d.update({"b":2}); d.pop("a", None)
+
+# set
+s = {1,2,3}; s.add(4); s.update({3,5}); s.discard(2)
+s1 & s2; s1 | s2; s1 - s2
+
+# collections
+from collections import Counter, defaultdict, deque
+Counter("abracadabra").most_common(2)
+lookup = defaultdict(list); lookup["k"].append(1)
+q = deque(maxlen=100); q.append(1); q.popleft()
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 8 Concurrency -->
+      <section class="card" data-title="concurrency threading multiprocessing asyncio httpx">
+        <div class="inner">
+          <h2>8) Concurrency</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code># threads (I/O bound)
+from concurrent.futures import ThreadPoolExecutor
+with ThreadPoolExecutor(max_workers=8) as ex:
+    list(ex.map(download, urls))
+
+# processes (CPU bound)
+from concurrent.futures import ProcessPoolExecutor
+with ProcessPoolExecutor() as ex:
+    list(ex.map(crunch, data))
+
+# asyncio (high‑concurrency I/O)
+import asyncio, httpx
+async def main():
+    async with httpx.AsyncClient() as client:
+        rs = await asyncio.gather(*[client.get(u) for u in urls])
+asyncio.run(main())
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 9 Packaging & Tooling -->
+      <section class="card" data-title="packaging poetry ruff mypy pre-commit">
+        <div class="inner">
+          <h2>9) Packaging & Tooling</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code># Poetry project
+pipx install poetry
+poetry new mypkg && cd mypkg
+poetry add requests pydantic
+poetry run pytest
+
+# Lint / Format / Types
+ruff check .
+ruff format .   # or: black . && isort .
+mypy .
+
+# pre-commit
+pre-commit install
+pre-commit run --all-files
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 10 Testing -->
+      <section class="card" data-title="testing pytest parametrize coverage">
+        <div class="inner">
+          <h2>10) Testing (pytest)</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code>pytest -q
+pytest path::test_file.py::TestClass::test_case -q
+pytest -k "login and not slow" -q
+pytest --maxfail=1 --disable-warnings -q
+pytest --cov=package --cov-report=term-missing
+
+# conftest + example
+import pytest
+@pytest.fixture
+def db(tmp_path):
+    return tmp_path/"test.db"
+
+@pytest.mark.parametrize("a,b,expected", [(2,2,4),(2,3,5)])
+def test_add(a,b,expected):
+    assert a+b == expected
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 11 Web/HTTP & FastAPI -->
+      <section class="card" data-title="http requests httpx fastapi pydantic jwt auth">
+        <div class="inner">
+          <h2>11) Web / HTTP & FastAPI</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code># requests
+import requests as R
+r = R.get("https://httpbin.org/get", timeout=10)
+r.raise_for_status(); data = r.json()
+
+# httpx (sync/async)
+import httpx
+with httpx.Client() as c:
+    data = c.get(url).json()
+
+# Minimal FastAPI app
+from fastapi import FastAPI
+from pydantic import BaseModel
+class Item(BaseModel):
+    name: str
+    price: float
+app = FastAPI()
+@app.get("/health")
+def health():
+    return {"ok": True}
+@app.post("/items")
+
+def create_item(item: Item):
+    return item
+
+# JWT sketch
+import jwt, datetime as dt
+SECRET = "change-me"
+token = jwt.encode({"sub":"user1","exp": dt.datetime.utcnow()+dt.timedelta(hours=1)}, SECRET, algorithm="HS256")
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 12 Databases -->
+      <section class="card" data-title="database sqlalchemy alembic sql tips">
+        <div class="inner">
+          <h2>12) Databases (SQLAlchemy + Alembic)</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code>from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, Mapped, mapped_column
+engine = create_engine("sqlite:///app.db", echo=False)
+Session = sessionmaker(bind=engine)
+class Base(DeclarativeBase): pass
+class User(Base):
+    __tablename__ = "users"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str]
+Base.metadata.create_all(engine)
+
+# Alembic quickstart
+# alembic init migrations
+# set sqlalchemy.url in alembic.ini
+# alembic revision -m "create tables"
+# alembic upgrade head
+
+# SQL tips: use EXPLAIN; index selective columns; avoid SELECT *
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 13 Data (pandas/NumPy) -->
+      <section class="card" data-title="data pandas numpy parquet groupby">
+        <div class="inner">
+          <h2>13) Data Work (pandas & NumPy)</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code>import pandas as pd
+
+df = pd.read_csv("data.csv")
+df.head(); df.info()
+# select/filter
+df2 = df.loc[df["price"] > 100, ["sku","price"]]
+# groupby
+agg = df.groupby("category").agg(count=("id","count"), avg_price=("price","mean")).reset_index()
+# write
+agg.to_parquet("out.parquet", index=False)
+
+import numpy as np
+arr = np.array([1,2,3])
+arr2 = arr * 2
+m, s = arr.mean(), arr.std()
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 14 CLI -->
+      <section class="card" data-title="cli argparse typer">
+        <div class="inner">
+          <h2>14) CLI Utilities</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code># argparse
+import argparse
+p = argparse.ArgumentParser()
+p.add_argument("path"); p.add_argument("--verbose", action="store_true")
+args = p.parse_args()
+
+# Typer (rich CLI)
+import typer
+app = typer.Typer()
+@app.command()
+
+def hello(name: str):
+    print(f"Hi {name}")
+if __name__ == "__main__":
+    app()
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 15 Docker/Makefile -->
+      <section class="card" data-title="docker makefile uvicorn">
+        <div class="inner">
+          <h2>15) Docker & Makefile</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code># Dockerfile (multi‑stage)
+FROM python:3.12-slim AS base
+WORKDIR /app
+COPY pyproject.toml poetry.lock* ./
+RUN pip install -U pip pipx && pipx install poetry && \
+    poetry config virtualenvs.create false && poetry install --no-root
+COPY . .
+CMD ["python","-m","app"]
+
+# Makefile
+.PHONY: lint test run
+lint:
+	ruff check . && mypy .
+fmt:
+	ruff format .
+test:
+	pytest -q
+run:
+	uvicorn app.main:app --reload
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 16 Security & Snippets -->
+      <section class="card" data-title="security config caching backoff chunked">
+        <div class="inner">
+          <h2>16) Security & Config • Handy Snippets</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code># Security notes
+# - Keep secrets in env vars or a secrets manager (never commit .env)
+# - Validate input (Pydantic), set timeouts
+# - Parametrized SQL to avoid injection; use HTTPS
+
+from functools import lru_cache
+@lru_cache(maxsize=1024)
+
+def get_cfg(key: str) -> str: ...
+
+# retry with backoff (simple)
+import time
+
+def call(fn, retries=3):
+    for i in range(retries):
+        try: return fn()
+        except Exception:
+            time.sleep(2**i)
+    raise
+
+# chunk an iterable
+from itertools import islice
+
+def chunked(it, size):
+    it = iter(it)
+    while (batch := list(islice(it, size))):
+        yield batch
+</code></pre></div>
+        </div>
+      </section>
+
+      <!-- 17 Git & Troubleshooting -->
+      <section class="card" data-title="git troubleshooting">
+        <div class="inner">
+          <h2>17) Git Everyday • Troubleshooting</h2>
+          <div class="rel"><button class="copy">⧉</button>
+<pre><code>git init && git add -A && git commit -m "init"
+git checkout -b feature/x
+git pull --rebase origin main
+git push -u origin feature/x
+
+git commit --amend
+
+git stash -u; git stash pop
+
+git cherry-pick &lt;commit&gt;
+
+# Troubleshooting: fresh venv, read traceback, log I/O, profile then optimize
+</code></pre></div>
+        </div>
+      </section>
+
+    </div>
+
+    <footer>© 2025 • Python Developer Cheat Sheet — White / Single Column</footer>
+  </main>
+
+  <script>
+    // Copy buttons
+    document.querySelectorAll('.copy').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const code = e.target.parentElement.querySelector('code').innerText;
+        try {
+          await navigator.clipboard.writeText(code);
+          const t = e.target; t.textContent = '✓'; t.style.borderColor = '#93c5fd';
+          setTimeout(() => { t.textContent = '⧉'; t.style.borderColor = 'var(--border)'; }, 900);
+        } catch(_) { alert('Copy failed'); }
+      });
+    });
+    // Filter
+    const q = document.getElementById('q');
+    const sections = [...document.querySelectorAll('section[data-title]')];
+    q.addEventListener('input', ev => {
+      const val = ev.target.value.toLowerCase();
+      sections.forEach(s => s.style.display = s.dataset.title.includes(val) ? '' : 'none');
+    });
+  </script>
+</body>
+</html>
