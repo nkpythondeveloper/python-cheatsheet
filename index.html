@@ -3,61 +3,56 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Python Developer Cheat Sheet (2025) — White, Single Column</title>
-  <meta name="description" content="Compact Python developer cheat sheet — white theme, single‑column layout with copy buttons and print to PDF." />
-  <style>
-    :root{
-      --bg:#ffffff; --text:#0f172a; --muted:#475569; --panel:#f8fafc; --border:#e5e7eb; --accent:#2563eb;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  <title>Python Developer Cheat Sheet (2025) — Tailwind White/Grey</title>
+  <meta name="description" content="Compact Python developer cheat sheet — white/grey Tailwind theme, single‑column layout with copy buttons and print‑friendly." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica", "Arial", "Apple Color Emoji", "Segoe UI Emoji"],
+            mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"]
+          }
+        }
+      }
     }
-    html,body{background:var(--bg); color:var(--text); margin:0;}
-    body{font-family: var(--sans); line-height:1.55;}
-    header{position:sticky; top:0; z-index:10; background:#ffffffcc; backdrop-filter:saturate(1.2) blur(6px); border-bottom:1px solid var(--border);} 
-    .container{max-width:960px; margin:0 auto; padding:18px 16px;}
-    h1{margin:0; font-weight:800; letter-spacing:-.02em;}
-    h2{margin:.25rem 0 .75rem; font-size:1.05rem; letter-spacing:.02em}
-    .sub{color:var(--muted); font-size:.9rem}
-    .stack{display:grid; grid-template-columns:1fr; gap:16px;}
-    .card{border:1px solid var(--border); border-radius:14px; background:var(--panel);} 
-    .card .inner{padding:14px 14px 12px;}
-    pre{margin:0; padding:12px; background:#fff; border:1px solid var(--border); border-radius:10px; overflow:auto; font-family:var(--mono); font-size:.9rem}
-    code{font-family:var(--mono)}
-    .copy{position:absolute; right:12px; top:10px; border:1px solid var(--border); background:#fff; color:var(--text); border-radius:8px; padding:4px 8px; font-size:.75rem; cursor:pointer}
-    .tool{display:flex; gap:8px; align-items:center}
-    input[type="search"]{flex:1; border:1px solid var(--border); border-radius:10px; padding:8px 10px; font-size:.9rem}
-    .btn{border:1px solid var(--border); background:#fff; border-radius:10px; padding:8px 10px; font-size:.9rem; cursor:pointer}
-    footer{color:var(--muted); font-size:.85rem; text-align:center; padding:24px 0}
-    .rel{position:relative}
-    ul.tips{margin:0; padding-left:18px}
-    ul.tips li{margin:.25rem 0}
-    @media print{ header{position:static} .btn,.tool{display:none} .card{break-inside:avoid} }
-  </style>
+  </script>
 </head>
-<body>
-  <header>
-    <div class="container" style="display:flex; gap:12px; align-items:center">
-      <div>
-        <h1>🐍 Python Developer Cheat Sheet <span style="color:var(--accent)">(2025)</span></h1>
-        <div class="sub">White theme • single‑column • copyable snippets • print‑friendly</div>
+<body class="bg-white text-slate-900 font-sans leading-relaxed">
+  <!-- Header -->
+  <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur print:static print:bg-white">
+    <div class="mx-auto max-w-4xl px-4 py-4 flex items-center gap-3">
+      <div class="min-w-0">
+        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight flex items-center gap-2">
+          <span>🐍 Python Developer Cheat Sheet</span>
+          <span class="text-blue-600">(2025)</span>
+        </h1>
+        <p class="text-slate-500 text-sm">White/Grey theme • single‑column • copyable snippets • print‑friendly</p>
       </div>
-      <div class="tool" style="margin-left:auto">
-        <input id="q" type="search" placeholder="Filter sections… (e.g., FastAPI, pytest, SQL)" />
-        <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+      <div class="ml-auto hidden sm:flex items-center gap-2 print:hidden">
+        <input id="q" type="search" inputmode="search" placeholder="Filter… (FastAPI, pytest, SQL)" class="w-64 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500/30" />
+        <button type="button" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm hover:bg-slate-50 active:bg-slate-100" onclick="window.print()">Print / Save PDF</button>
       </div>
+    </div>
+    <!-- Mobile search -->
+    <div class="sm:hidden px-4 pb-3 print:hidden">
+      <input id="q-mobile" type="search" inputmode="search" placeholder="Filter sections…" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500/30" />
     </div>
   </header>
 
-  <main class="container">
-    <div id="stack" class="stack">
+  <!-- Main -->
+  <main class="mx-auto max-w-4xl px-4 py-6">
+    <div id="stack" class="space-y-4">
+
+      <!-- Card Template: add print:break-inside-avoid to prevent splitting -->
 
       <!-- 1 Basics -->
-      <section class="card" data-title="basics virtualenv syntax unpacking f-strings">
-        <div class="inner">
-          <h2>1) Python Basics</h2>
-          <div class="rel">
-            <button class="copy" title="Copy">⧉</button>
-<pre><code>#!/usr/bin/env python3
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="basics virtualenv venv syntax unpacking f-strings">
+        <h2 class="text-base font-semibold tracking-wide mb-2">1) Python Basics</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden" title="Copy">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code>#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 python -m venv .venv
@@ -74,29 +69,28 @@ x, *rest = [1,2,3,4]
 a = {'x': 1, 'y': 2}; b = {'y': 20, 'z': 3}
 merged = {**a, **b}  # {'x':1,'y':20,'z':3}
 </code></pre>
-          </div>
         </div>
       </section>
 
       <!-- 2 Comprehensions -->
-      <section class="card" data-title="comprehensions generators">
-        <div class="inner">
-          <h2>2) Comprehensions & Generators</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code>squares = [i*i for i in range(10) if i%2==0]
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="comprehensions generators list dict set">
+        <h2 class="text-base font-semibold tracking-wide mb-2">2) Comprehensions &amp; Generators</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code>squares = [i*i for i in range(10) if i%2==0]
 lookup = {user.id: user for user in users}
 unique = {x.strip() for x in lines}
 stream = (f(x) for x in data)  # lazy
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 3 Functions/Decorators/Context -->
-      <section class="card" data-title="functions decorators context managers retry">
-        <div class="inner">
-          <h2>3) Functions, Decorators, Context Managers</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code>def func(a, b=0, *args, c=1, **kw):
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="functions decorators context managers retry">
+        <h2 class="text-base font-semibold tracking-wide mb-2">3) Functions, Decorators, Context Managers</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code>def func(a, b=0, *args, c=1, **kw):
     """Describe params & returns"""
     return (a+b)*c
 
@@ -123,16 +117,16 @@ def db_session(Session):
         s.rollback(); raise
     finally:
         s.close()
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 4 OOP & Typing -->
-      <section class="card" data-title="oop dataclasses typing optional union callable">
-        <div class="inner">
-          <h2>4) OOP & Data Classes, Typing</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code>from dataclasses import dataclass, field
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="oop dataclasses typing optional union callable">
+        <h2 class="text-base font-semibold tracking-wide mb-2">4) OOP &amp; Data Classes, Typing</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code>from dataclasses import dataclass, field
 @dataclass(slots=True)
 class User:
     id: int
@@ -143,16 +137,16 @@ from typing import Optional, Union, Callable
 MaybeStr = Optional[str]
 Number = Union[int, float]
 Checker = Callable[[int, str], bool]
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 5 Logging/Files/Regex -->
-      <section class="card" data-title="logging files paths time regex">
-        <div class="inner">
-          <h2>5) Errors & Logging • Files & Time • Regex</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code>import logging
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="logging files paths time regex errors">
+        <h2 class="text-base font-semibold tracking-wide mb-2">5) Errors &amp; Logging • Files &amp; Time • Regex</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code>import logging
 logging.basicConfig(
   level=logging.INFO,
   format="%(asctime)s [%(levelname)s] %(name)s:%(lineno)d %(message)s"
@@ -171,16 +165,16 @@ now_utc = datetime.now(timezone.utc)
 import re
 m = re.search(r"\b(\w+)@(\w+\.[a-z]+)\b", s)
 if m: user, domain = m.groups()
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 6 Subprocess & Perf -->
-      <section class="card" data-title="subprocess performance itertools collections profile">
-        <div class="inner">
-          <h2>6) Subprocess & Performance Tips</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code>import subprocess as sp
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="subprocess performance itertools collections profile tips">
+        <h2 class="text-base font-semibold tracking-wide mb-2">6) Subprocess &amp; Performance Tips</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code>import subprocess as sp
 sp.run(["ls", "-la"], check=True)
 
 # Tips
@@ -188,16 +182,16 @@ sp.run(["ls", "-la"], check=True)
 # - Prefer set/dict lookups (O(1))
 # - Use itertools, collections (Counter, deque)
 # - Profile: python -m cProfile -o prof.out script.py
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 7 Collections methods -->
-      <section class="card" data-title="collections list dict set counter deque defaultdict">
-        <div class="inner">
-          <h2>7) Collections & Methods</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code># list
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="collections list dict set counter deque defaultdict methods">
+        <h2 class="text-base font-semibold tracking-wide mb-2">7) Collections &amp; Methods</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code># list
 lst = [1,2,3]; lst.append(4); lst.extend([5,6]); lst.insert(0, 0)
 lst.remove(3); x = lst.pop(); lst.sort(key=lambda x: x, reverse=True)
 
@@ -214,16 +208,16 @@ from collections import Counter, defaultdict, deque
 Counter("abracadabra").most_common(2)
 lookup = defaultdict(list); lookup["k"].append(1)
 q = deque(maxlen=100); q.append(1); q.popleft()
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 8 Concurrency -->
-      <section class="card" data-title="concurrency threading multiprocessing asyncio httpx">
-        <div class="inner">
-          <h2>8) Concurrency</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code># threads (I/O bound)
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="concurrency threading multiprocessing asyncio httpx">
+        <h2 class="text-base font-semibold tracking-wide mb-2">8) Concurrency</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code># threads (I/O bound)
 from concurrent.futures import ThreadPoolExecutor
 with ThreadPoolExecutor(max_workers=8) as ex:
     list(ex.map(download, urls))
@@ -239,16 +233,16 @@ async def main():
     async with httpx.AsyncClient() as client:
         rs = await asyncio.gather(*[client.get(u) for u in urls])
 asyncio.run(main())
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 9 Packaging & Tooling -->
-      <section class="card" data-title="packaging poetry ruff mypy pre-commit">
-        <div class="inner">
-          <h2>9) Packaging & Tooling</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code># Poetry project
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="packaging poetry ruff mypy pre-commit lint format types">
+        <h2 class="text-base font-semibold tracking-wide mb-2">9) Packaging &amp; Tooling</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code># Poetry project
 pipx install poetry
 poetry new mypkg && cd mypkg
 poetry add requests pydantic
@@ -262,16 +256,16 @@ mypy .
 # pre-commit
 pre-commit install
 pre-commit run --all-files
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 10 Testing -->
-      <section class="card" data-title="testing pytest parametrize coverage">
-        <div class="inner">
-          <h2>10) Testing (pytest)</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code>pytest -q
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="testing pytest parametrize coverage markers">
+        <h2 class="text-base font-semibold tracking-wide mb-2">10) Testing (pytest)</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code>pytest -q
 pytest path::test_file.py::TestClass::test_case -q
 pytest -k "login and not slow" -q
 pytest --maxfail=1 --disable-warnings -q
@@ -286,16 +280,16 @@ def db(tmp_path):
 @pytest.mark.parametrize("a,b,expected", [(2,2,4),(2,3,5)])
 def test_add(a,b,expected):
     assert a+b == expected
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 11 Web/HTTP & FastAPI -->
-      <section class="card" data-title="http requests httpx fastapi pydantic jwt auth">
-        <div class="inner">
-          <h2>11) Web / HTTP & FastAPI</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code># requests
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="http requests httpx fastapi pydantic jwt auth web api">
+        <h2 class="text-base font-semibold tracking-wide mb-2">11) Web / HTTP &amp; FastAPI</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code># requests
 import requests as R
 r = R.get("https://httpbin.org/get", timeout=10)
 r.raise_for_status(); data = r.json()
@@ -324,16 +318,16 @@ def create_item(item: Item):
 import jwt, datetime as dt
 SECRET = "change-me"
 token = jwt.encode({"sub":"user1","exp": dt.datetime.utcnow()+dt.timedelta(hours=1)}, SECRET, algorithm="HS256")
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 12 Databases -->
-      <section class="card" data-title="database sqlalchemy alembic sql tips">
-        <div class="inner">
-          <h2>12) Databases (SQLAlchemy + Alembic)</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code>from sqlalchemy import create_engine
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="database sqlalchemy alembic sql tips">
+        <h2 class="text-base font-semibold tracking-wide mb-2">12) Databases (SQLAlchemy + Alembic)</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code>from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase, Mapped, mapped_column
 engine = create_engine("sqlite:///app.db", echo=False)
 Session = sessionmaker(bind=engine)
@@ -351,16 +345,16 @@ Base.metadata.create_all(engine)
 # alembic upgrade head
 
 # SQL tips: use EXPLAIN; index selective columns; avoid SELECT *
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 13 Data (pandas/NumPy) -->
-      <section class="card" data-title="data pandas numpy parquet groupby">
-        <div class="inner">
-          <h2>13) Data Work (pandas & NumPy)</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code>import pandas as pd
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="data pandas numpy parquet groupby dataframe array">
+        <h2 class="text-base font-semibold tracking-wide mb-2">13) Data Work (pandas &amp; NumPy)</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code>import pandas as pd
 
 df = pd.read_csv("data.csv")
 df.head(); df.info()
@@ -375,16 +369,16 @@ import numpy as np
 arr = np.array([1,2,3])
 arr2 = arr * 2
 m, s = arr.mean(), arr.std()
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 14 CLI -->
-      <section class="card" data-title="cli argparse typer">
-        <div class="inner">
-          <h2>14) CLI Utilities</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code># argparse
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="cli argparse typer command line">
+        <h2 class="text-base font-semibold tracking-wide mb-2">14) CLI Utilities</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code># argparse
 import argparse
 p = argparse.ArgumentParser()
 p.add_argument("path"); p.add_argument("--verbose", action="store_true")
@@ -399,16 +393,16 @@ def hello(name: str):
     print(f"Hi {name}")
 if __name__ == "__main__":
     app()
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 15 Docker/Makefile -->
-      <section class="card" data-title="docker makefile uvicorn">
-        <div class="inner">
-          <h2>15) Docker & Makefile</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code># Dockerfile (multi‑stage)
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="docker makefile uvicorn container">
+        <h2 class="text-base font-semibold tracking-wide mb-2">15) Docker &amp; Makefile</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code># Dockerfile (multi‑stage)
 FROM python:3.12-slim AS base
 WORKDIR /app
 COPY pyproject.toml poetry.lock* ./
@@ -427,16 +421,16 @@ test:
 	pytest -q
 run:
 	uvicorn app.main:app --reload
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 16 Security & Snippets -->
-      <section class="card" data-title="security config caching backoff chunked">
-        <div class="inner">
-          <h2>16) Security & Config • Handy Snippets</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code># Security notes
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="security config caching backoff chunked lru">
+        <h2 class="text-base font-semibold tracking-wide mb-2">16) Security &amp; Config • Handy Snippets</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code># Security notes
 # - Keep secrets in env vars or a secrets manager (never commit .env)
 # - Validate input (Pydantic), set timeouts
 # - Parametrized SQL to avoid injection; use HTTPS
@@ -463,16 +457,16 @@ def chunked(it, size):
     it = iter(it)
     while (batch := list(islice(it, size))):
         yield batch
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
       <!-- 17 Git & Troubleshooting -->
-      <section class="card" data-title="git troubleshooting">
-        <div class="inner">
-          <h2>17) Git Everyday • Troubleshooting</h2>
-          <div class="rel"><button class="copy">⧉</button>
-<pre><code>git init && git add -A && git commit -m "init"
+      <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 print:break-inside-avoid" data-title="git troubleshooting everyday commands">
+        <h2 class="text-base font-semibold tracking-wide mb-2">17) Git Everyday • Troubleshooting</h2>
+        <div class="relative">
+          <button class="copy absolute right-2 top-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-800 shadow-sm hover:bg-slate-50 print:hidden">⧉</button>
+          <pre class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-3 text-sm font-mono"><code>git init && git add -A && git commit -m "init"
 git checkout -b feature/x
 git pull --rebase origin main
 git push -u origin feature/x
@@ -484,33 +478,40 @@ git stash -u; git stash pop
 git cherry-pick &lt;commit&gt;
 
 # Troubleshooting: fresh venv, read traceback, log I/O, profile then optimize
-</code></pre></div>
+</code></pre>
         </div>
       </section>
 
+      <footer class="text-center text-sm text-slate-500 py-6">© 2025 • Python Developer Cheat Sheet — White / Single Column</footer>
     </div>
-
-    <footer>© 2025 • Python Developer Cheat Sheet — White / Single Column</footer>
   </main>
 
   <script>
+    // Filter (mobile + desktop)
+    const inputs = [document.getElementById('q'), document.getElementById('q-mobile')].filter(Boolean);
+    const sections = Array.from(document.querySelectorAll('section[data-title]'));
+    const applyFilter = (val) => {
+      const v = (val || '').toLowerCase().trim();
+      for (const s of sections) {
+        const hay = (s.dataset.title || '').toLowerCase();
+        s.style.display = !v || hay.includes(v) ? '' : 'none';
+      }
+    };
+    inputs.forEach(i => i.addEventListener('input', (e) => applyFilter(e.target.value)));
+
     // Copy buttons
     document.querySelectorAll('.copy').forEach(btn => {
       btn.addEventListener('click', async (e) => {
-        const code = e.target.parentElement.querySelector('code').innerText;
+        const codeEl = e.target.closest('.relative').querySelector('code');
+        const text = codeEl ? codeEl.innerText : '';
         try {
-          await navigator.clipboard.writeText(code);
-          const t = e.target; t.textContent = '✓'; t.style.borderColor = '#93c5fd';
-          setTimeout(() => { t.textContent = '⧉'; t.style.borderColor = 'var(--border)'; }, 900);
-        } catch(_) { alert('Copy failed'); }
+          await navigator.clipboard.writeText(text);
+          const t = e.target; t.textContent = '✓'; t.classList.add('border-blue-300');
+          setTimeout(() => { t.textContent = '⧉'; t.classList.remove('border-blue-300'); }, 900);
+        } catch (err) {
+          alert('Copy failed');
+        }
       });
-    });
-    // Filter
-    const q = document.getElementById('q');
-    const sections = [...document.querySelectorAll('section[data-title]')];
-    q.addEventListener('input', ev => {
-      const val = ev.target.value.toLowerCase();
-      sections.forEach(s => s.style.display = s.dataset.title.includes(val) ? '' : 'none');
     });
   </script>
 </body>
